@@ -1,0 +1,1 @@
+# edj-sonar-java-plugin
