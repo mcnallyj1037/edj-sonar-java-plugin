@@ -26,14 +26,7 @@ import org.sonar.api.SonarRuntime;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.resources.Qualifiers;
 import org.sonar.api.utils.Version;
-import org.sonar.java.AnalysisWarningsWrapper;
-import org.sonar.java.DefaultJavaResourceLocator;
-import org.sonar.java.JavaClasspath;
-import org.sonar.java.JavaClasspathProperties;
-import org.sonar.java.JavaConstants;
-import org.sonar.java.JavaSonarLintClasspath;
-import org.sonar.java.JavaTestClasspath;
-import org.sonar.java.SonarComponents;
+import org.sonar.java.*;
 import org.sonar.java.filters.PostAnalysisIssueFilter;
 import org.sonar.plugins.jacoco.JaCoCoExtensions;
 import org.sonar.plugins.surefire.SurefireExtensions;
@@ -94,6 +87,7 @@ public class JavaPlugin implements Plugin {
     }
 
     context.addExtensions(builder.build());
+    context.addExtension(EDJMetric.class);
   }
 
   /**

@@ -30,16 +30,13 @@ import org.sonar.api.batch.sensor.SensorContext;
 import org.sonar.api.issue.NoSonarFilter;
 import org.sonar.api.measures.CoreMetrics;
 import org.sonar.api.measures.Metric;
-import org.sonar.java.ast.visitors.CognitiveComplexityVisitor;
-import org.sonar.java.ast.visitors.CommentLinesVisitor;
-import org.sonar.java.ast.visitors.LinesOfCodeVisitor;
-import org.sonar.java.ast.visitors.StatementVisitor;
-import org.sonar.java.ast.visitors.SubscriptionVisitor;
+import org.sonar.java.ast.visitors.*;
 import org.sonar.plugins.java.api.JavaFileScanner;
 import org.sonar.plugins.java.api.JavaFileScannerContext;
 import org.sonar.plugins.java.api.tree.ClassTree;
 import org.sonar.plugins.java.api.tree.NewClassTree;
 import org.sonar.plugins.java.api.tree.Tree;
+import static org.sonar.java.EDJMetric.EDJ_METRIC;
 
 public class Measurer extends SubscriptionVisitor {
 
@@ -92,6 +89,7 @@ public class Measurer extends SubscriptionVisitor {
     saveMetricOnFile(CoreMetrics.COMMENT_LINES, commentLinesVisitor.commentLinesMetric());
     saveMetricOnFile(CoreMetrics.STATEMENTS, new StatementVisitor().numberOfStatements(context.getTree()));
     saveMetricOnFile(CoreMetrics.NCLOC, new LinesOfCodeVisitor().linesOfCode(context.getTree()));
+    saveMetricOnFile(EDJ_METRIC, new EDJVisitor().compilationUnitComplexity(context.getTree()));
 
     saveMetricOnFile(CoreMetrics.COGNITIVE_COMPLEXITY, CognitiveComplexityVisitor.compilationUnitComplexity(context.getTree()));
   }
